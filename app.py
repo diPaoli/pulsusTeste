@@ -15,14 +15,18 @@ app = FastAPI(title="Teste Técnico - Pulsus")
 @app.get('/devices', description="Retorna todos os dispositivos.")
 async def get_devices():
     lista = db.select_AllDevs()
-    devices = []
 
-    for dev in lista:
-        d = Device(id=dev[0], motorista=dev[1])
-        devices.append(d)       
+    if lista:
+        devices = []
 
-    json_devices = jsonable_encoder(devices)
-    return JSONResponse(content=json_devices, status_code=200)
+        for dev in lista:
+            d = Device(id=dev[0], motorista=dev[1])
+            devices.append(d)       
+
+        json_devices = jsonable_encoder(devices)
+        return JSONResponse(content=json_devices, status_code=200)
+    else:
+        return {"Msg": "Nenhum registro encontrado."}
 
 
 
@@ -38,7 +42,7 @@ async def get_device(dev_id):
         json_device = jsonable_encoder(device)
         return JSONResponse(content=json_device, status_code=200)
     else:
-        return {"Erro": "Nenhum registro encontrato."}
+        return {"Msg": "Nenhum registro encontrato."}
 
 
 
@@ -73,9 +77,13 @@ async def post_Local(dev_id, latitude, longitude):
     row = db.insert_Local(dev_id, latitude, longitude)
 
     if row:
-        return {"msg": "Local incluído com sucesso."}
+        return {"Msg": "Local incluído com sucesso."}
     else:
-        return {"Erro": "Erro ao registrar Localização."}
+        return {"Erro": "Não foi possível registrar a localização.",
+                "Dispositivo": dev_id,
+                "Latitude": latitude,
+                "Longitude": longitude
+                }
 
 
 

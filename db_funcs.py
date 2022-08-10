@@ -1,5 +1,6 @@
 import mysql.connector
-
+from log.log_gen import createLog
+from datetime import datetime
 
 v_host='localhost'
 v_port = 3306
@@ -7,26 +8,39 @@ v_user='root'
 v_pw = 'admin'
 v_db = 'pulsusteste'
 
-conn = mysql.connector.connect(host=v_host,  
+"""
+    Conecta o DB.
+    Num sistema sério seria esperado um módulo separado para
+        autenticação e autorização.
+    Estou fazendo as funções de DB tudo junto só como exemplo.
+"""
+try:
+    conn = mysql.connector.connect(host=v_host,  
                                     port=v_port,
                                     user=v_user,
                                     password=v_pw,
                                     db=v_db)
+except Exception as e:
+    createLog(datetime.now(), v_user, e)
 
+
+    
 
 # Retorna todos os Devices
 def select_AllDevs():    
     query = "SELECT * FROM devices"
     
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        return rows
+    except Exception as e:
+        createLog(datetime.now(), v_user, e)
+        return None
+
 
     
-    #for row in rows:
-     #   print(row)
-
-    return rows
     
 
 
@@ -34,10 +48,14 @@ def select_AllDevs():
 def select_Dev(dev_id):
     query = "SELECT * FROM devices WHERE id = %s"
     
-    cursor = conn.cursor()
-    cursor.execute(query, [dev_id])
-    rows = cursor.fetchone()
-    return rows
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query, [dev_id])
+        rows = cursor.fetchone()
+        return rows
+    except Exception as e:
+        createLog(datetime.now(), v_user, e)
+    return None
 
 
 
@@ -46,13 +64,14 @@ def select_Dev(dev_id):
 def select_AllLocals():
     query = "SELECT * FROM locals"
     
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-
-
-
-    return rows
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        return rows
+    except Exception as e:
+        createLog(datetime.now(), v_user, e)
+    return None
 
    
 
@@ -64,11 +83,14 @@ def select_DevLocals(dev_id):
             "WHERE d.id = l.dev_id AND d.id = %s"
             "ORDER BY d.id, l.data")
     
-    cursor = conn.cursor()
-    cursor.execute(query, [dev_id])
-    rows = cursor.fetchall()
-
-    return rows
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query, [dev_id])
+        rows = cursor.fetchall()
+        return rows
+    except Exception as e:
+        createLog(datetime.now(), v_user, e)
+    return None
 
 
 
@@ -78,6 +100,10 @@ def insert_Local(dev_id, lat, lon):
     query = ("INSERT INTO locals (dev_id, data, lat, lon) "
             "values (%s, now(), %s, %s)")
 
-    cursor = conn.cursor()
-    cursor.execute(query, [dev_id, lat, lon])
-    return cursor.lastrowid
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query, [dev_id, lat, lon])
+        return cursor.lastrowid
+    except Exception as e:
+        createLog(datetime.now(), v_user, e)
+    return None
