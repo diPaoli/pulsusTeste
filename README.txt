@@ -12,7 +12,7 @@ Edite o arquivo db_funcs.py com o seu usuário e senha para permitir a conexão
 
 
 FORMATO DAS REQUISIÇÕES
-Eu sugiro a extensão Thunder Cliente, para Visual Studio Code, para simplificar as requisições.
+Eu sugiro a extensão Thunder Client, para Visual Studio Code, para simplificar as requisições. Ou você pode utilizar outra ferramenta da sua preferência.
 O app tem apenas 4 funções: 
 
 1. Buscar todos os dispositivos: http://localhost:8000/devices
