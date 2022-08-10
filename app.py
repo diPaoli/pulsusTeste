@@ -6,13 +6,24 @@ from models.models import Device, Local
 import db_funcs as db
 
 
-app = FastAPI(title="Teste Técnico - Pulsus")
+
+app = FastAPI(title="Teste Técnico - Pulsus",
+description=("Exercício simples: conectar na base de dados MySQL para retornar "
+            "listas em formato JSON ou inserir registros. A conexão com MySQL "
+            "foi feita com MySQL Connector. A conversão dos dados para JSON foi "
+            "feita usando FastAPI.Este e os outros exercícios no repositório "
+            "fazem parte dos meus Eestudos na linguagem Python, que contam 12 dias "
+            "na data desta publicação."))
 
 
 
 
 # GET todos os Devices
-@app.get('/devices', description="Retorna todos os dispositivos.")
+@app.get('/devices', description=("Retorna um objeto JSON contendo todas os "
+        "dispositivos cadastrados. Se não houver registros, retorna apenas "
+        "com mensagem de informação."),
+        summary="Busca todos os dispositivos",
+        response_description="Retorna um Objeto JSON")
 async def get_devices():
     lista = db.select_AllDevs()
 
@@ -32,7 +43,12 @@ async def get_devices():
 
 
 # GET 1 Device
-@app.get('/devices/{dev_id}', description="Retorna um dispositivo pelo ID.")
+@app.get('/devices/{dev_id}',
+    description=("Busca um dispositivo pelo ID e retorna um objeto JSON "
+    "com os dados. Se o ID não for encontrado retorna com mensagem "
+    "de informação."),
+    summary="Busca um dispositivo pelo ID.",
+    response_description="Retorna um Objeto JSON")
 async def get_device(dev_id):
     result = db.select_Dev(dev_id)
 
@@ -49,7 +65,11 @@ async def get_device(dev_id):
 
 
 # GET Locals de 1 Device
-@app.get('/locals/{dev_id}', description="Retorna todos os locais de 1 Dispositivo.")
+@app.get('/locals/{dev_id}',
+    description=("Busca os locais pelos quais um dispositivo passou. "
+    "Se não houver registros, retorna mensagem de informação."),
+    summary="Busca os Locais registrados para um dispositivo.",
+    response_description="Retorna um Objeto JSON")
 async def get_DevLocals(dev_id):
     result = db.select_DevLocals(dev_id)
 
@@ -65,25 +85,24 @@ async def get_DevLocals(dev_id):
         json_locals = jsonable_encoder(locals)
         return JSONResponse(content=json_locals, status_code=200)
     else:
-        return {"Erro": "Nenhum registro encontrato."}
+        return {"Msg": "Nenhum registro encontrato."}
 
 
 
 
 
 # POST 1 Local
-@app.post('/locals/{dev_id}/{latitude}/{longitude}', description="Registra 1 local.")
+@app.post('/locals/{dev_id}/{latitude}/{longitude}',
+    description=("Registra uma localização para um dado dispositivo."),
+    summary="Registra a localização de um dispositivo.",
+    response_description="Retorna um Objeto JSON")
 async def post_Local(dev_id, latitude, longitude):
     row = db.insert_Local(dev_id, latitude, longitude)
 
     if row:
         return {"Msg": "Local incluído com sucesso."}
     else:
-        return {"Erro": "Não foi possível registrar a localização.",
-                "Dispositivo": dev_id,
-                "Latitude": latitude,
-                "Longitude": longitude
-                }
+        return {"Erro": "Não foi possível registrar a localização."}
 
 
 

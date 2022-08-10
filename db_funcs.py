@@ -1,6 +1,8 @@
 import mysql.connector
-from log.log_gen import createLog
 from datetime import datetime
+
+from log.log_gen import createLog
+
 
 v_host='localhost'
 v_port = 3306
@@ -9,11 +11,13 @@ v_pw = 'admin'
 v_db = 'pulsusteste'
 
 """
-    Conecta o DB.
     Num sistema sério seria esperado um módulo separado para
-        autenticação e autorização.
-    Estou fazendo as funções de DB tudo junto só como exemplo.
+    autenticação e autorização.
+    Nesse exemplo, como não temos outros objetos e funções, 
+    faremos tudo no mesmo módulo.
 """
+
+# Conecta o DB
 try:
     conn = mysql.connector.connect(host=v_host,  
                                     port=v_port,
