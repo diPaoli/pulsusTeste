@@ -1,5 +1,13 @@
 # pulsusTeste
-Simple exercise: connect into a MySQL database to return JSON lists or insert rows.
 
-If you wish to try it, use the database.sql file to recreate the database on your system, then edit db_funcs.py with your user & pass to allow the app to connect.
+********Pt_BR
+Exercício simples: conectar na base de dados MySQL para retornar listas em formato JSON ou inserir registros.
+A conexão com MySQL foi feita com MySQL Connector.
+A conversão dos dados para JSON foi feita usando FastAPI.
+
+PARA REPLICAR O AMBIENTE
+Veja o arquivo requirements.txt para instalar as bibliotecas necessárias;
+Use o arquivo database.sql para replicar a base de dados no seu sistema;
+Edite o arquivo db_funcs.py com o seu usuário e senha para permitir a conexão.
+
 
