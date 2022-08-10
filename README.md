@@ -1,6 +1,5 @@
 # pulsusTeste
 
-********Pt_BR
 Exercício simples: conectar na base de dados MySQL para retornar listas em formato JSON ou inserir registros.
 A conexão com MySQL foi feita com MySQL Connector.
 A conversão dos dados para JSON foi feita usando FastAPI.
