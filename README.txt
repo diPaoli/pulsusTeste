@@ -3,17 +3,18 @@
 Exercício simples: conectar na base de dados MySQL para retornar listas em formato JSON ou inserir registros.
 A conexão com MySQL foi feita com MySQL Connector.
 A conversão dos dados para JSON foi feita usando FastAPI.
-Este e os outros exercícios no repositório fazem parte dos meus estudos na linguagem Python, que contam 12 dias na data desta publicação.
+Este e os outros exercícios no repositório fazem parte dos meus primeiros estudos na linguagem Python, que contam 16 dias na data da primeira publicação deste projeto.
 
 
 PARA REPLICAR O AMBIENTE
 Veja o arquivo requirements.txt para instalar as bibliotecas necessárias;
 Use o arquivo database.sql para replicar a base de dados no seu sistema;
-Edite o arquivo db_funcs.py com o seu usuário e senha para permitir a conexão
+Edite o arquivo db_funcs.py com o seu usuário e senha para permitir a conexão.
 
 
-FORMATO DAS REQUISIÇÕES
-Eu sugiro a extensão Thunder Client, para Visual Studio Code, para simplificar as requisições. Ou você pode utilizar outra ferramenta da sua preferência.
+PARA TESTAR
+Utilize a documentação automática da FastAPI: http://localhost:8000/docs
+
 O app tem apenas 4 funções: 
 
 1. Buscar todos os dispositivos: http://localhost:8000/devices
